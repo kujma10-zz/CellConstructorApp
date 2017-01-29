@@ -1,0 +1,18 @@
+{
+  "name": "cell-constructor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "js/main.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kote Ujmajuridze <koteujmajuridze@gmail.com>",
+  "devDependencies": {
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "matter-js": "^0.11.1"
+  }
+}
