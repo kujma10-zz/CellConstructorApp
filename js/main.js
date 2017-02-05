@@ -4,9 +4,10 @@ var Matter = require('matter-js/build/matter.js')
 var Engine = Matter.Engine,
   Render = Matter.Render,
   World = Matter.World,
-  Bodies = Matter.Bodies
+  Bodies = Matter.Bodies,
   Composites = Matter.Composites,
   Common = Matter.Common,
+  Constraint = Matter.Constraint,
   Body = Matter.Body,
   Events = Matter.Events,
   Mouse = Matter.Mouse,
@@ -44,14 +45,12 @@ var balls = Composites.stack(100, 50, 8, 8, 10, 10, function(x, y) {
   return ball;
 });
 
-
 var bottom = Bodies.rectangle(400, 600, 800, 1, { isStatic: true });
 var left   = Bodies.rectangle(0, 300, 1, 600, { isStatic: true });
 var top    = Bodies.rectangle(400, 0, 800, 1, { isStatic: true });
 var right  = Bodies.rectangle(800, 300, 1, 600, { isStatic: true });
 
 World.add(engine.world, [balls, top, bottom, left, right]);
-
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
@@ -68,6 +67,26 @@ World.add(engine.world, mouseConstraint);
 
 // keep the mouse in sync with rendering
 render.mouse = mouse;
+
+
+Events.on(engine, 'collisionStart', function(event) {
+  var pairs = event.pairs;
+
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+
+    if(pair.bodyA.render.strokeStyle == pair.bodyB.render.strokeStyle){
+      var constraint = Constraint.create({
+        bodyA: pair.bodyA,
+        bodyB: pair.bodyB,
+        length: 40.0,
+        stiffness: 0.05
+      });
+
+      World.add(engine.world, constraint);
+    }
+  }
+}),
 
 // run the engine
 Engine.run(engine);
