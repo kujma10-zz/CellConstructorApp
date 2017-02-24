@@ -9,10 +9,16 @@
   },
   "author": "Kote Ujmajuridze <koteujmajuridze@gmail.com>",
   "devDependencies": {
-    "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "matter-js": "^0.11.1"
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "matter-js": "^0.11.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^1.13.3"
   }
 }
