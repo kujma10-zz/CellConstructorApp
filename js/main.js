@@ -1,3 +1,19 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactionEditor from './components/ReactionEditor.js'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reactionsReducer from './reducers'
+
+let store = createStore(reactionsReducer)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactionEditor />
+  </Provider>,
+  document.getElementById('ui')
+);
+
 var Matter = require('matter-js/build/matter.js')
 
 // module aliases
@@ -18,10 +34,12 @@ var engine = Engine.create();
 
 // create a renderer
 var render = Render.create({
-  element: document.body,
+  element: document.getElementById('canvas'),
   engine: engine,
   options: {
-    background: '#fafafa'
+    background: '#fafafa',
+    width: Math.min(document.documentElement.clientWidth, 600),
+    height: Math.min(document.documentElement.clientHeight, 600)
   }
 });
 
@@ -30,7 +48,7 @@ render.options.wireframes = false
 engine.world.gravity.scale = 0;
 
 var balls = Composites.stack(100, 50, 8, 8, 10, 10, function(x, y) {
-  ball = Bodies.circle(x, y, Common.random(17, 17), {
+  var ball = Bodies.circle(x, y, 16, {
     restitution: 1,
     friction: 0,
     frictionAir: 0,
@@ -45,10 +63,10 @@ var balls = Composites.stack(100, 50, 8, 8, 10, 10, function(x, y) {
   return ball;
 });
 
-var bottom = Bodies.rectangle(400, 600, 800, 1, { isStatic: true });
+var bottom = Bodies.rectangle(300, 600, 600, 1, { isStatic: true });
 var left   = Bodies.rectangle(0, 300, 1, 600, { isStatic: true });
-var top    = Bodies.rectangle(400, 0, 800, 1, { isStatic: true });
-var right  = Bodies.rectangle(800, 300, 1, 600, { isStatic: true });
+var top    = Bodies.rectangle(300, 0, 600, 1, { isStatic: true });
+var right  = Bodies.rectangle(600, 300, 1, 600, { isStatic: true });
 
 World.add(engine.world, [balls, top, bottom, left, right]);
 
@@ -82,8 +100,7 @@ Events.on(engine, 'collisionStart', function(event) {
         length: 40.0,
         stiffness: 0.05
       });
-
-      World.add(engine.world, constraint);
+      World.addConstraint(engine.world, constraint);
     }
   }
 }),
