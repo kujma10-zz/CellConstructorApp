@@ -32,23 +32,23 @@ const initialState = {
 
 const reactionsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_FIRST_REACTANT_TYPE':
+    case 'FIRST_REACTANT_TYPE_UPDATED':
       return R.compose(
         R.assocPath(['currentReaction', 'firstReactant', 'type'], action.payload.type),
         R.assocPath(['currentReaction', 'firstProduct', 'type'], action.payload.type)
       )(state);;
-    case 'UPDATE_FIRST_REACTANT_STATE':
+    case 'FIRST_REACTANT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'firstReactant', 'state'], action.payload.state, state);
-    case 'UPDATE_SECOND_REACTANT_TYPE':
+    case 'SECOND_REACTANT_TYPE_UPDATED':
       return R.compose(
         R.assocPath(['currentReaction', 'secondReactant', 'type'], action.payload.type),
         R.assocPath(['currentReaction', 'secondProduct', 'type'], action.payload.type)
       )(state);;
-    case 'UPDATE_SECOND_REACTANT_STATE':
+    case 'SECOND_REACTANT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'secondReactant', 'state'], action.payload.state, state);
-    case 'UPDATE_FIRST_PRODUCT_STATE':
+    case 'FIRST_PRODUCT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'firstProduct', 'state'], action.payload.state, state);
-    case 'UPDATE_SECOND_PRODUCT_STATE':
+    case 'SECOND_PRODUCT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'secondProduct', 'state'], action.payload.state, state);
     default:
       return state;

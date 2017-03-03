@@ -1,41 +1,41 @@
-export const updateFirstReactantType = (value) => {
+export const firstReactantTypeUpdated = (value) => {
   return {
-    type: "UPDATE_FIRST_REACTANT_TYPE",
+    type: "FIRST_REACTANT_TYPE_UPDATED",
     payload: { type: value }
   }
 }
 
-export const updateFirstReactantState = (value) => {
+export const firstReactantStateUpdated = (value) => {
   return {
-    type: "UPDATE_FIRST_REACTANT_STATE",
+    type: "FIRST_REACTANT_STATE_UPDATED",
     payload: { state: value }
   }
 }
 
-export const updateSecondReactantType = (value) => {
+export const secondReactantTypeUpdated = (value) => {
   return {
-    type: "UPDATE_SECOND_REACTANT_TYPE",
+    type: "SECOND_REACTANT_TYPE_UPDATED",
     payload: { type: value }
   }
 }
 
-export const updateSecondReactantState = (value) => {
+export const secondReactantStateUpdated = (value) => {
   return {
-    type: "UPDATE_SECOND_REACTANT_STATE",
+    type: "SECOND_REACTANT_STATE_UPDATED",
     payload: { state: value }
   }
 }
 
-export const updateFirstProductState = (value) => {
+export const firstProductStateUpdated = (value) => {
   return {
-    type: "UPDATE_FIRST_PRODUCT_STATE",
+    type: "FIRST_PRODUCT_STATE_UPDATED",
     payload: { state: value }
   }
 }
 
-export const updateSecondProductState = (value) => {
+export const secondProductStateUpdated = (value) => {
   return {
-    type: "UPDATE_SECOND_PRODUCT_STATE",
+    type: "SECOND_PRODUCT_STATE_UPDATED",
     payload: { state: value }
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from '../components/Dropdown';
 
-import { updateFirstReactantType } from '../actions';
+import { firstReactantTypeUpdated } from '../actions';
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSelected: (value) => dispatch(updateFirstReactantType(value))
+    onSelected: (value) => dispatch(firstReactantTypeUpdated(value))
   }
 };
 
