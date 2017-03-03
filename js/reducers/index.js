@@ -8,8 +8,8 @@ const initialState = {
   types: ['A', 'B', 'C', 'D', 'E', 'X', 'Y'],
   states: range(0, 10),
   currentReaction: {
-    bondedBefore: true,
-    bondedAfter: false,
+    bondedBefore: false,
+    bondedAfter: true,
     firstReactant: {
       type: 'A',
       state: 0
@@ -50,6 +50,10 @@ const reactionsReducer = (state = initialState, action) => {
       return R.assocPath(['currentReaction', 'firstProduct', 'state'], action.payload.state, state);
     case 'SECOND_PRODUCT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'secondProduct', 'state'], action.payload.state, state);
+    case 'BONDED_BEFORE_UPDATED':
+      return R.assocPath(['currentReaction', 'bondedBefore'], action.payload.value, state);
+    case 'BONDED_AFTER_UPDATED':
+      return R.assocPath(['currentReaction', 'bondedAfter'], action.payload.value, state);
     default:
       return state;
   }

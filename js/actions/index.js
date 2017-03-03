@@ -40,3 +40,16 @@ export const secondProductStateUpdated = (value) => {
   }
 }
 
+export const bondedBeforeUpdated = (value) => {
+  return {
+    type: "BONDED_BEFORE_UPDATED",
+    payload: { value: value }
+  }
+}
+
+export const bondedAfterUpdated = (value) => {
+  return {
+    type: "BONDED_AFTER_UPDATED",
+    payload: { value: value }
+  }
+}

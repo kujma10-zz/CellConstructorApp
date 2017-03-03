@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactionEditor from './components/ReactionEditor.js'
+import ReactionEditorContainer from './containers/ReactionEditorContainer.js'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reactionsReducer from './reducers'
@@ -9,7 +9,7 @@ let store = createStore(reactionsReducer)
 
 ReactDOM.render(
   <Provider store={store}>
-    <ReactionEditor />
+    <ReactionEditorContainer />
   </Provider>,
   document.getElementById('ui')
 );

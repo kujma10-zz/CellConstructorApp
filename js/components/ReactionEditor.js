@@ -10,18 +10,25 @@ import SecondProductTypeContainer from '../containers/SecondProductTypeContainer
 import SecondProductStateContainer from '../containers/SecondProductStateContainer'
 
 const ReactionEditor = (props) => {
+  const onBondedBeforeChanged = (event) => props.onBondedBeforeChanged(event.target.checked)
+  const onBondedAfterChanged = (event) => props.onBondedAfterChanged(event.target.checked)
+
+  const beforePlusSpan = props.bondedBefore ? <span></span> : <span> + </span>;
+  const afterPlusSpan = props.bondedAfter ? <span></span> : <span> + </span>;
+
   return (
     <div className="reaction-editor">
-      <input type="checkbox" name="bond" value="left-bond"/> Bonded before<br/>
-      <input type="checkbox" name="bond" value="right-bond"/> Bonded after<br/>
+      <input type="checkbox" checked={props.bondedBefore} onChange={onBondedBeforeChanged} value="left-bond"/> Bonded before<br/>
+      <input type="checkbox" checked={props.bondedAfter} onChange={onBondedAfterChanged} value="right-bond"/> Bonded after<br/>
       <FirstReactantTypeContainer />
       <FirstReactantStateContainer />
-      <span> + </span>
+      {beforePlusSpan}
       <SecondReactantTypeContainer />
       <SecondReactantStateContainer />
       <span> => </span>
       <FirstProductTypeContainer />
       <FirstProductStateContainer />
+      {afterPlusSpan}
       <SecondProductTypeContainer />
       <SecondProductStateContainer />
       <input type="submit" value="Submit"/>
