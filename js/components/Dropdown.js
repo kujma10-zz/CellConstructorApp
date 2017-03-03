@@ -1,9 +1,13 @@
 import React from 'react';
 
 const Dropdown = (props) => {
-  let dropdownValues = props.values.map((value) => {
-    return <a key={value} onClick={props.onSelected.bind(props, value)}>{value}</a>
-  });
+
+  let dropdownValues = [];
+  if(!props.disabled){
+    dropdownValues = props.values.map((value) => {
+      return <a key={value} onClick={props.onSelected.bind(props, value)}>{value}</a>
+    });
+  }
 
   return (
     <div className="dropdown">
