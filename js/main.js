@@ -50,20 +50,48 @@ render.options.wireframes = false
 
 engine.world.gravity.scale = 0;
 
-var balls = Composites.stack(100, 50, 8, 8, 10, 10, function(x, y) {
-  var ball = Bodies.circle(x, y, 16, {
+function createAtom(x, y, type, color){
+  var atom = Bodies.circle(x, y, 16, {
     restitution: 1,
     friction: 0,
     frictionAir: 0,
     frictionStatic: 0,
-    inertia: Infinity
-  });
+    inertia: Infinity,
+    atomType: type,
+    atomState: 0,
+    render: {
+      strokeStyle: color,
+      fillStyle: color
+    }
+  })
 
-  Body.setVelocity(ball, {
+
+  Body.setVelocity(atom, {
     x: Common.random(-5, 5),
     y: Common.random(-5, 5)
   });
-  return ball;
+
+  return atom;
+}
+
+var atomsA = Composites.stack(100, 50, 1, 10, 10, 10, function(x, y){
+  return createAtom(x, y, 'A', '#cc3838')
+});
+
+var atomsB = Composites.stack(200, 50, 1, 10, 10, 10, function(x, y){
+  return createAtom(x, y, 'B', '#911a25')
+});
+
+var atomsC = Composites.stack(300, 50, 1, 10, 10, 10, function(x, y){
+  return createAtom(x, y, 'C', '#222f3d')
+});
+
+var atomsD = Composites.stack(400, 50, 1, 10, 10, 10, function(x, y){
+  return createAtom(x, y, 'D', '#94c131')
+});
+
+var atomsE = Composites.stack(500, 50, 1, 10, 10, 10, function(x, y){
+  return createAtom(x, y, 'E', '#1b9a91')
 });
 
 var bottom = Bodies.rectangle(300, 600, 600, 1, { isStatic: true });
@@ -71,7 +99,7 @@ var left   = Bodies.rectangle(0, 300, 1, 600, { isStatic: true });
 var top    = Bodies.rectangle(300, 0, 600, 1, { isStatic: true });
 var right  = Bodies.rectangle(600, 300, 1, 600, { isStatic: true });
 
-World.add(engine.world, [balls, top, bottom, left, right]);
+World.add(engine.world, [atomsA, atomsB, atomsC, atomsD, atomsE, top, bottom, left, right]);
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
