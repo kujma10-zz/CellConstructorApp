@@ -1,7 +1,7 @@
 import React from "react";
 import ReactionEditor from '../components/ReactionEditor';
 
-import { bondedBeforeUpdated, bondedAfterUpdated } from '../actions';
+import { bondedBeforeUpdated, bondedAfterUpdated, reactionSubmitted } from '../actions';
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBondedBeforeChanged: (value) => dispatch(bondedBeforeUpdated(value)),
-    onBondedAfterChanged: (value) => dispatch(bondedAfterUpdated(value))
+    onBondedAfterChanged: (value) => dispatch(bondedAfterUpdated(value)),
+    onSubmitted: () => dispatch(reactionSubmitted())
   }
 };
 

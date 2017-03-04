@@ -31,7 +31,7 @@ const ReactionEditor = (props) => {
       {afterPlusSpan}
       <SecondProductTypeContainer />
       <SecondProductStateContainer />
-      <input type="submit" value="Submit"/>
+      <input type="submit" value="Submit" onClick={props.onSubmitted.bind(props)}/>
     </div>
   );
 };

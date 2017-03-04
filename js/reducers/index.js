@@ -54,6 +54,8 @@ const reactionsReducer = (state = initialState, action) => {
       return R.assocPath(['currentReaction', 'bondedBefore'], action.payload.value, state);
     case 'BONDED_AFTER_UPDATED':
       return R.assocPath(['currentReaction', 'bondedAfter'], action.payload.value, state);
+    case 'REACTION_SUBMITTED':
+      return R.assoc('reactionList', R.append(state.currentReaction, state.reactionList), state);
     default:
       return state;
   }

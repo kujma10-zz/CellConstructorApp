@@ -53,3 +53,9 @@ export const bondedAfterUpdated = (value) => {
     payload: { value: value }
   }
 }
+
+export const reactionSubmitted = () => {
+  return {
+    type: "REACTION_SUBMITTED"
+  }
+}
