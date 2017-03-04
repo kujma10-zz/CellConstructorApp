@@ -117,22 +117,31 @@ World.add(engine.world, mouseConstraint);
 // keep the mouse in sync with rendering
 render.mouse = mouse;
 
-
 Events.on(engine, 'collisionStart', function(event) {
+  const reactionList = store.getState().reactionList;
   var pairs = event.pairs;
 
   for (var i = 0; i < pairs.length; i++) {
     var pair = pairs[i];
 
-    if(pair.bodyA.render.strokeStyle == pair.bodyB.render.strokeStyle){
-      var constraint = Constraint.create({
-        bodyA: pair.bodyA,
-        bodyB: pair.bodyB,
-        length: 40.0,
-        stiffness: 0.05
-      });
-      World.addConstraint(engine.world, constraint);
+    for (var j = 0; j < reactionList.length; j++) {
+      const currentReaction = reactionList[j];
+      const cond1 = pair.bodyA.atomType == currentReaction.firstReactant.type && pair.bodyB.atomType == currentReaction.secondReactant.type;
+      const cond2 = pair.bodyA.atomType == currentReaction.secondReactant.type && pair.bodyB.atomType == currentReaction.firstReactant.type;
+      if(cond1 || cond2){
+        var constraint = Constraint.create({
+          bodyA: pair.bodyA,
+          bodyB: pair.bodyB,
+          length: 40.0,
+          stiffness: 0.05
+        });
+
+        pair.bodyA.atomState = cond1 ? currentReaction.firstReactant.state : currentReaction.secondReactant.state
+        pair.bodyB.atomState = cond1 ? currentReaction.secondReactant.state : currentReaction.firstReactant.state
+        World.addConstraint(engine.world, constraint);
+      }
     }
+
   }
 }),
 
