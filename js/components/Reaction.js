@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import R from 'ramda';
 
 const Reaction = (props) => {

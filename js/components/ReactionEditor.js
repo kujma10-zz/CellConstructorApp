@@ -1,17 +1,16 @@
 import React from 'react';
-import Dropdown from './Dropdown.js'
-import FirstReactantTypeContainer from '../containers/FirstReactantTypeContainer'
-import FirstReactantStateContainer from '../containers/FirstReactantStateContainer'
-import SecondReactantTypeContainer from '../containers/SecondReactantTypeContainer'
-import SecondReactantStateContainer from '../containers/SecondReactantStateContainer'
-import FirstProductTypeContainer from '../containers/FirstProductTypeContainer'
-import FirstProductStateContainer from '../containers/FirstProductStateContainer'
-import SecondProductTypeContainer from '../containers/SecondProductTypeContainer'
-import SecondProductStateContainer from '../containers/SecondProductStateContainer'
+import FirstReactantTypeContainer from '../containers/FirstReactantTypeContainer';
+import FirstReactantStateContainer from '../containers/FirstReactantStateContainer';
+import SecondReactantTypeContainer from '../containers/SecondReactantTypeContainer';
+import SecondReactantStateContainer from '../containers/SecondReactantStateContainer';
+import FirstProductTypeContainer from '../containers/FirstProductTypeContainer';
+import FirstProductStateContainer from '../containers/FirstProductStateContainer';
+import SecondProductTypeContainer from '../containers/SecondProductTypeContainer';
+import SecondProductStateContainer from '../containers/SecondProductStateContainer';
 
 const ReactionEditor = (props) => {
-  const onBondedBeforeChanged = (event) => props.onBondedBeforeChanged(event.target.checked)
-  const onBondedAfterChanged = (event) => props.onBondedAfterChanged(event.target.checked)
+  const onBondedBeforeChanged = (event) => props.onBondedBeforeChanged(event.target.checked);
+  const onBondedAfterChanged = (event) => props.onBondedAfterChanged(event.target.checked);
 
   const beforePlusSpan = props.bondedBefore ? <span></span> : <span> + </span>;
   const afterPlusSpan = props.bondedAfter ? <span></span> : <span> + </span>;

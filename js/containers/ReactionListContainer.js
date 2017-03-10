@@ -1,11 +1,10 @@
-import React from "react";
 import ReactionList from '../components/ReactionList';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    reactionList: state.reactionList
-  }
+    reactionList: state.reactionList,
+  };
 };
 
 export default connect(mapStateToProps)(ReactionList);

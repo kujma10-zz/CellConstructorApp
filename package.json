@@ -5,10 +5,15 @@
   "main": "js/main.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "author": "Kote Ujmajuridze <koteujmajuridze@gmail.com>",
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.17.1",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-react": "^6.10.0",
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {

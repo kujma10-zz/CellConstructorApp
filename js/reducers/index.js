@@ -1,7 +1,7 @@
-import R from 'ramda'
+import R from 'ramda';
 
 function range(start, end) {
-  return Array(end - start + 1).fill().map((_, idx) => start + idx)
+  return Array(end - start + 1).fill().map((_, idx) => start + idx);
 }
 
 const initialState = {
@@ -12,23 +12,23 @@ const initialState = {
     bondedAfter: true,
     firstReactant: {
       type: 'A',
-      state: 0
+      state: 0,
     },
     secondReactant: {
       type: 'B',
-      state: 0
+      state: 0,
     },
     firstProduct: {
       type: 'A',
-      state: 0
+      state: 0,
     },
     secondProduct: {
       type: 'B',
-      state: 0
-    }
+      state: 0,
+    },
   },
-  reactionList: []
-}
+  reactionList: [],
+};
 
 const reactionsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,14 +36,14 @@ const reactionsReducer = (state = initialState, action) => {
       return R.compose(
         R.assocPath(['currentReaction', 'firstReactant', 'type'], action.payload.type),
         R.assocPath(['currentReaction', 'firstProduct', 'type'], action.payload.type)
-      )(state);;
+      )(state); ;
     case 'FIRST_REACTANT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'firstReactant', 'state'], action.payload.state, state);
     case 'SECOND_REACTANT_TYPE_UPDATED':
       return R.compose(
         R.assocPath(['currentReaction', 'secondReactant', 'type'], action.payload.type),
         R.assocPath(['currentReaction', 'secondProduct', 'type'], action.payload.type)
-      )(state);;
+      )(state); ;
     case 'SECOND_REACTANT_STATE_UPDATED':
       return R.assocPath(['currentReaction', 'secondReactant', 'state'], action.payload.state, state);
     case 'FIRST_PRODUCT_STATE_UPDATED':
@@ -59,7 +59,7 @@ const reactionsReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default reactionsReducer;
 

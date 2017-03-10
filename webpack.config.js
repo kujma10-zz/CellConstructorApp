@@ -1,10 +1,10 @@
 module.exports = {
   entry: './js/main.js',
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
-    port: 3090
+    port: 3090,
   },
   module: {
     noParse: /node_modules\/matter-js\/build\/matter.js/,
@@ -14,10 +14,10 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react']
-        }
-      }
-    ]
-  }
+          presets: ['es2015', 'react'],
+        },
+      },
+    ],
+  },
 
 };
