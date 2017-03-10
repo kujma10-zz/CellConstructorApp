@@ -52,7 +52,7 @@ engine.world.gravity.scale = 0;
 
 function createAtom(x, y, type, color) {
   let atom = Bodies.circle(x, y, 16, {
-    restitution: 1,
+    restitution: 1.004,
     friction: 0,
     frictionAir: 0,
     frictionStatic: 0,
@@ -132,10 +132,12 @@ Events.on(engine, 'collisionStart', function(event) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
           bodyB: pair.bodyB,
-          length: 40.0,
-          stiffness: 0.05,
+          length: 28.0,
+          stiffness: 0,
         });
 
+        pair.bodyA.restitution = 1.2
+        pair.bodyB.restitution = 1.2
         pair.bodyA.atomState = cond1 ? currentReaction.firstReactant.state : currentReaction.secondReactant.state;
         pair.bodyB.atomState = cond1 ? currentReaction.secondReactant.state : currentReaction.firstReactant.state;
         World.addConstraint(engine.world, constraint);
