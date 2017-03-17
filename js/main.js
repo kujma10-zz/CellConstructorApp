@@ -52,7 +52,7 @@ engine.world.gravity.scale = 0;
 
 function createAtom(x, y, type, color) {
   let atom = Bodies.circle(x, y, 16, {
-    restitution: 1.004,
+    restitution: 1,
     friction: 0,
     frictionAir: 0,
     frictionStatic: 0,
@@ -116,13 +116,26 @@ World.add(engine.world, mouseConstraint);
 
 // keep the mouse in sync with rendering
 render.mouse = mouse;
+let momentums = {};
+
+function calculateSpeed(velocity){
+  return Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+}
 
 Events.on(engine, 'collisionStart', function(event) {
   const reactionList = store.getState().reactionList;
   let pairs = event.pairs;
 
-  for (let i = 0; i < pairs.length; i++) {
+  for (let i = 0, j = pairs.length; i != j; ++i) {
     let pair = pairs[i];
+
+    if(pair.bodyA.label == "Circle Body" && pair.bodyB.label == "Circle Body"){
+      const totalMomentrumBeforeCollision = pair.bodyA.mass * calculateSpeed(pair.bodyA.velocity) + pair.bodyB.mass * calculateSpeed(pair.bodyB.velocity);
+      // Sometimes body.speed not equals to ((body.velocity.x)^2 + (body.velocity.y)^2)^0.5, why?
+      //const totalMomentrumBeforeCollision = pair.bodyA.mass * pair.bodyA.speed + pair.bodyB.mass * pair.bodyB.speed;
+      momentums[pair.id] = totalMomentrumBeforeCollision;
+    }
+
 
     for (let j = 0; j < reactionList.length; j++) {
       const currentReaction = reactionList[j];
@@ -132,19 +145,57 @@ Events.on(engine, 'collisionStart', function(event) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
           bodyB: pair.bodyB,
-          length: 28.0,
-          stiffness: 0,
+          length: 38.0,
+          stiffness: 0.5,
         });
 
-        pair.bodyA.restitution = 1.2
-        pair.bodyB.restitution = 1.2
         pair.bodyA.atomState = cond1 ? currentReaction.firstReactant.state : currentReaction.secondReactant.state;
         pair.bodyB.atomState = cond1 ? currentReaction.secondReactant.state : currentReaction.firstReactant.state;
         World.addConstraint(engine.world, constraint);
       }
     }
   }
-}),
+});
+
+// `collisionActive` seems better than `collisionEnd`, why?
+Events.on(engine, 'collisionActive', function(event) {
+  var pairs = event.pairs;
+
+  for (var i = 0, j = pairs.length; i != j; ++i) {
+    var pair = pairs[i];
+
+
+    const momentumBeforeCollision = momentums[pair.id];
+    if(momentumBeforeCollision){
+      const momentumAfterCollision = pair.bodyA.mass * calculateSpeed(pair.bodyA.velocity) + pair.bodyB.mass * calculateSpeed(pair.bodyB.velocity);
+      //const momentumAfterCollision = pair.bodyA.mass * pair.bodyA.speed + pair.bodyB.mass * pair.bodyB.speed;
+
+      // sometimes it's less than 1, why?
+      const diff = momentumBeforeCollision / momentumAfterCollision;
+
+      Body.setVelocity(pair.bodyA, {
+        x: pair.bodyA.velocity.x * diff,
+        y: pair.bodyA.velocity.y * diff,
+      });
+
+      Body.setVelocity(pair.bodyB, {
+        x: pair.bodyB.velocity.x * diff,
+        y: pair.bodyB.velocity.y * diff,
+      });
+
+      const momentumAfterCollision2 = pair.bodyA.mass * calculateSpeed(pair.bodyA.velocity) + pair.bodyB.mass * calculateSpeed(pair.bodyB.velocity);
+      //const momentumAfterCollision2 = pair.bodyA.mass * pair.bodyA.speed + pair.bodyB.mass * pair.bodyB.speed;
+
+      let diff2 = momentumBeforeCollision - momentumAfterCollision2;
+      // these are logged when momentums are calculated using `body.mass`
+      if(diff2 > 0.001 || diff2 < -0.001){
+        console.log("Difference between momentums")
+      }
+
+    }
+  }
+
+});
 
 // run the engine
 Engine.run(engine);
