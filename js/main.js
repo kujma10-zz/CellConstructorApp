@@ -4,6 +4,7 @@ import AppWrapper from './components/AppWrapper.js';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import reactionsReducer from './reducers';
+import Render from './matterjs/CustomRender.js'
 
 let store = createStore(
   reactionsReducer,
@@ -21,7 +22,6 @@ let Matter = require('matter-js/build/matter.js');
 
 // module aliases
 let Engine = Matter.Engine,
-  Render = Matter.Render,
   World = Matter.World,
   Bodies = Matter.Bodies,
   Composites = Matter.Composites,
@@ -43,6 +43,7 @@ let render = Render.create({
     background: '#fafafa',
     width: Math.min(document.documentElement.clientWidth, 600),
     height: Math.min(document.documentElement.clientHeight, 600),
+    bodyNames: true
   },
 });
 
@@ -64,7 +65,6 @@ function createAtom(x, y, type, color) {
       fillStyle: color,
     },
   });
-
 
   Body.setVelocity(atom, {
     x: Common.random(-5, 5),
@@ -187,7 +187,7 @@ Events.on(engine, 'collisionActive', function(event) {
       //const momentumAfterCollision2 = pair.bodyA.mass * pair.bodyA.speed + pair.bodyB.mass * pair.bodyB.speed;
 
       let diff2 = momentumBeforeCollision - momentumAfterCollision2;
-      // these are logged when momentums are calculated using `body.mass`
+      // these are logged when momentums are calculated using `body.speed`
       if(diff2 > 0.001 || diff2 < -0.001){
         console.log("Difference between momentums")
       }
