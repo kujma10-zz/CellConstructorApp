@@ -149,8 +149,8 @@ Events.on(engine, 'collisionStart', function(event) {
           stiffness: 0.5,
         });
 
-        pair.bodyA.atomState = cond1 ? currentReaction.firstReactant.state : currentReaction.secondReactant.state;
-        pair.bodyB.atomState = cond1 ? currentReaction.secondReactant.state : currentReaction.firstReactant.state;
+        pair.bodyA.atomState = cond1 ? currentReaction.firstProduct.state : currentReaction.secondProduct.state;
+        pair.bodyB.atomState = cond1 ? currentReaction.secondProduct.state : currentReaction.firstProduct.state;
         World.addConstraint(engine.world, constraint);
       }
     }
