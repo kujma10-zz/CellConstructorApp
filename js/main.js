@@ -122,6 +122,13 @@ function calculateSpeed(velocity){
   return Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
 }
 
+function matchAtoms(firstBody, firstReactant, secondBody, secondReactant) {
+  const equalsType = firstBody.atomType == firstReactant.type && secondBody.atomType == secondReactant.type;
+  const equalsState = firstBody.atomState == firstReactant.state && secondBody.atomState == secondReactant.state;
+  if(equalsType && equalsState) return true;
+  return false;
+}
+
 Events.on(engine, 'collisionStart', function(event) {
   const reactionList = store.getState().reactionList;
   let pairs = event.pairs;
@@ -139,8 +146,8 @@ Events.on(engine, 'collisionStart', function(event) {
 
     for (let j = 0; j < reactionList.length; j++) {
       const currentReaction = reactionList[j];
-      const cond1 = pair.bodyA.atomType == currentReaction.firstReactant.type && pair.bodyB.atomType == currentReaction.secondReactant.type;
-      const cond2 = pair.bodyA.atomType == currentReaction.secondReactant.type && pair.bodyB.atomType == currentReaction.firstReactant.type;
+      const cond1 = matchAtoms(pair.bodyA, currentReaction.firstReactant, pair.bodyB, currentReaction.secondReactant);
+      const cond2 = matchAtoms(pair.bodyA, currentReaction.secondReactant, pair.bodyB, currentReaction.firstReactant);
       if(cond1 || cond2) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
