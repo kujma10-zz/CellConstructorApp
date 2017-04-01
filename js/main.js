@@ -152,8 +152,8 @@ Events.on(engine, 'collisionStart', function(event) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
           bodyB: pair.bodyB,
-          length: 38.0,
-          stiffness: 0.5,
+          length: 31.0,
+          stiffness: 0,
         });
 
         pair.bodyA.atomState = cond1 ? currentReaction.firstProduct.state : currentReaction.secondProduct.state;
