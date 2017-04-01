@@ -144,11 +144,11 @@ Events.on(engine, 'collisionStart', function(event) {
     }
 
 
-    for (let j = 0; j < reactionList.length; j++) {
-      const currentReaction = reactionList[j];
+    reactionList.filter((reaction) => !reaction.bondedBefore).forEach(function(currentReaction){
       const cond1 = matchAtoms(pair.bodyA, currentReaction.firstReactant, pair.bodyB, currentReaction.secondReactant);
       const cond2 = matchAtoms(pair.bodyA, currentReaction.secondReactant, pair.bodyB, currentReaction.firstReactant);
-      if(cond1 || cond2) {
+
+      if(currentReaction.bondedAfter &&  (cond1 || cond2)) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
           bodyB: pair.bodyB,
@@ -160,7 +160,10 @@ Events.on(engine, 'collisionStart', function(event) {
         pair.bodyB.atomState = cond1 ? currentReaction.secondProduct.state : currentReaction.firstProduct.state;
         World.addConstraint(engine.world, constraint);
       }
-    }
+
+      pair.bodyA.atomState = cond1 ? currentReaction.firstProduct.state : cond2 ? currentReaction.secondProduct.state : pair.bodyA.atomState;
+      pair.bodyB.atomState = cond1 ? currentReaction.secondProduct.state : cond2 ? currentReaction.firstProduct.state : pair.bodyB.atomState;
+    });
   }
 });
 
