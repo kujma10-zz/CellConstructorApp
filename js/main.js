@@ -207,6 +207,26 @@ Events.on(engine, 'collisionActive', function(event) {
 
 });
 
+document.getElementById("submit").addEventListener("click", function(){
+  const currentReaction = store.getState().currentReaction;
+  if(currentReaction.bondedBefore){
+    const constraints = Matter.Composite.allConstraints(engine.world)
+    constraints.forEach(function(constraint){
+      if(constraint.bodyA && constraint.bodyB && constraint.label == 'Constraint'){
+        const cond1 = matchAtoms(constraint.bodyA, currentReaction.firstReactant, constraint.bodyB, currentReaction.secondReactant);
+        const cond2 = matchAtoms(constraint.bodyA, currentReaction.secondReactant, constraint.bodyB, currentReaction.firstReactant);
+        if(cond1 || cond2){
+          if(!currentReaction.bondedAfter){
+            Matter.Composite.remove(engine.world, constraint);
+          }
+          constraint.bodyA.atomState = cond1 ? currentReaction.firstProduct.state : cond2 ? currentReaction.secondProduct.state : constraint.bodyA.atomState;
+          constraint.bodyB.atomState = cond1 ? currentReaction.secondProduct.state : cond2 ? currentReaction.firstProduct.state : constraint.bodyB.atomState;
+        }
+      }
+    })
+  }
+});
+
 // run the engine
 Engine.run(engine);
 
