@@ -52,7 +52,7 @@ render.options.wireframes = false;
 engine.world.gravity.scale = 0;
 
 function createAtom(x, y, type, color) {
-  let atom = Bodies.circle(x, y, 16, {
+  let atom = Bodies.circle(x, y, Common.random(14, 20), {
     restitution: 1,
     friction: 0,
     frictionAir: 0,
@@ -152,7 +152,7 @@ Events.on(engine, 'collisionStart', function(event) {
         let constraint = Constraint.create({
           bodyA: pair.bodyA,
           bodyB: pair.bodyB,
-          length: 31.0,
+          length: pair.bodyA.circleRadius + pair.bodyB.circleRadius - 1,
           stiffness: 0,
         });
 
